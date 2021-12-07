@@ -280,7 +280,7 @@ export const Root = () => {
       article = (
         <article>
           <p className="message">{primaryQuestions[primaryQuestionIndex]}</p>
-          <ul>
+          <ul key={primaryQuestionIndex}>
             <li>
               <button
                 onClick={() => {
@@ -340,7 +340,7 @@ export const Root = () => {
       article = (
         <article>
           <p className="message">{item.question}</p>
-          <ul>
+          <ul key={state.answers.join(``)}>
             <li>
               <button onClick={advance(true)}>Yes</button>
             </li>
