@@ -1,0 +1,68 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "NPM Install",
+      "type": "shell",
+      "command": "npm install",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\cmd.exe",
+            "args": [
+              "/d",
+              "/c"
+            ]
+          }
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Watch Build",
+      "type": "shell",
+      "command": "npm run-script watch",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\cmd.exe",
+            "args": [
+              "/d",
+              "/c"
+            ]
+          }
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Production Build",
+      "type": "shell",
+      "command": "npm run-script production",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\cmd.exe",
+            "args": [
+              "/d",
+              "/c"
+            ]
+          }
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

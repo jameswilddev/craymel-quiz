@@ -1,0 +1,39 @@
+name: Continuous Integration
+on:
+  push:
+  pull_request:
+  release:
+    types:
+      [published]
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+        registry-url: 'https://registry.npmjs.org'
+    - run: sed -i s/"999\.999\.999"/"${GITHUB_REF##*/}"/ package.json package-lock.json src/index.pug
+      if: github.event_name == 'release'
+    - run: npm ci
+    - run: npm run-script lint
+    - run: npm run-script buildTypeScript
+    - run: npm run-script buildNyc
+    - run: npm run-script webpack
+    - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --follow-symlinks
+      env:
+        AWS_S3_BUCKET: ${{ secrets.DOMAIN }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'eu-west-1'
+        SOURCE_DIR: 'dist'
+      if: github.event_name == 'release'
+    - uses: jakejarvis/cloudflare-purge-action@master
+      env:
+        CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+        CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+        PURGE_URLS: '["https://${{ secrets.DOMAIN }}/","https://${{ secrets.DOMAIN }}/yandex-browser-manifest.json","https://${{ secrets.DOMAIN }}/service-worker.js","https://${{ secrets.DOMAIN }}/manifest.webapp","https://${{ secrets.DOMAIN }}/manifest.json","https://${{ secrets.DOMAIN }}/index.html","https://${{ secrets.DOMAIN }}/browserconfig.xml"]'
+      if: github.event_name == 'release'

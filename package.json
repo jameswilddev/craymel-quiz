@@ -1,0 +1,71 @@
+{
+  "name": "craymel-quiz",
+  "version": "999.999.999",
+  "description": "Take the Tales of Eternia/Tales of Destiny II Craymel quiz online!",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "engineStrict": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jameswilddev/craymel-quiz"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/babel__core": "7.1.14",
+    "@types/jasmine": "3.7.7",
+    "@types/mini-css-extract-plugin": "1.4.3",
+    "@types/react": "17.0.13",
+    "@types/react-dom": "17.0.8",
+    "@types/workbox-webpack-plugin": "5.1.7",
+    "@typescript-eslint/eslint-plugin": "4.22.1",
+    "@typescript-eslint/parser": "4.22.1",
+    "css-loader": "5.2.6",
+    "del-cli": "3.0.1",
+    "eslint": "7.25.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "3.4.0",
+    "favicons": "6.2.1",
+    "favicons-webpack-plugin": "5.0.2",
+    "html-webpack-plugin": "5.3.1",
+    "jasmine": "3.10.0",
+    "mini-css-extract-plugin": "1.6.0",
+    "node-static": "0.7.11",
+    "npm-run-all": "4.1.5",
+    "nyc": "15.1.0",
+    "prettier": "2.2.1",
+    "pug": "3.0.2",
+    "pug-loader": "2.4.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "sass": "1.32.12",
+    "sass-loader": "11.0.1",
+    "ts-node": "9.1.1",
+    "typescript": "4.2.4",
+    "webpack": "5.36.2",
+    "webpack-cli": "4.7.0",
+    "workbox-webpack-plugin": "6.1.5"
+  },
+  "scripts": {
+    "prod": "npm run-script production",
+    "production": "npm-run-all test webpack",
+    "watch": "npm-run-all buildClean buildTypeScript webpackWatchPostClean",
+    "buildClean": "del-cli \"**/*.js\" \"**/*.d.ts\" \"!**/node_modules/**/*\"",
+    "buildTypeScript": "tsc",
+    "buildJasmineUnit": "jasmine --config=unit.jasmine.json",
+    "buildNyc": "nyc --all --exclude \"**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/unit.*\" --exclude \"webpack.config.js\" npm run-script buildJasmineUnit",
+    "test": "npm-run-all buildClean buildTypeScript buildNyc",
+    "lint": "eslint \"**/*.ts\"",
+    "webpack": "webpack --mode=production --config ./webpack.config.js",
+    "webpackWatchPostClean": "npm-run-all --parallel webpackWatchPostCleanTypeScript webpackWatchPostCleanWebpack webpackWatchPostCleanNodeStatic",
+    "webpackWatchPostCleanTypeScript": "tsc --watch",
+    "webpackWatchPostCleanWebpack": "webpack --watch --mode=development --config ./webpack.config.js",
+    "webpackWatchPostCleanNodeStatic": "static ./dist"
+  },
+  "files": [
+    "**/*.js",
+    "**/*.d.ts",
+    "!**/unit.js",
+    "!**/unit.d.ts"
+  ]
+}
