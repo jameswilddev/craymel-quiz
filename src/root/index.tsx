@@ -280,34 +280,36 @@ export const Root = () => {
       article = (
         <article>
           <p className="message">{primaryQuestions[primaryQuestionIndex]}</p>
-          <ul key={primaryQuestionIndex}>
-            <li>
-              <button
-                onClick={() => {
-                  const craymelScoresCopy = [...state.craymelScores];
-                  craymelScoresCopy[
-                    Math.floor(
-                      primaryQuestionIndex /
-                      (primaryQuestions.length / craymelOutroLines.length)
-                    )
-                  ]++;
+          <div>
+            <ul key={primaryQuestionIndex}>
+              <li>
+                <button
+                  onClick={() => {
+                    const craymelScoresCopy = [...state.craymelScores];
+                    craymelScoresCopy[
+                      Math.floor(
+                        primaryQuestionIndex /
+                        (primaryQuestions.length / craymelOutroLines.length)
+                      )
+                    ]++;
 
-                  advance(craymelScoresCopy);
-                }}
-              >
-                Yes
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  advance(state.craymelScores);
-                }}
-              >
-                No
-              </button>
-            </li>
-          </ul>
+                    advance(craymelScoresCopy);
+                  }}
+                >
+                  Yes
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    advance(state.craymelScores);
+                  }}
+                >
+                  No
+                </button>
+              </li>
+            </ul>
+          </div>
         </article>
       );
       break;
@@ -340,14 +342,16 @@ export const Root = () => {
       article = (
         <article>
           <p className="message">{item.question}</p>
-          <ul key={state.answers.join(``)}>
-            <li>
-              <button onClick={advance(true)}>Yes</button>
-            </li>
-            <li>
-              <button onClick={advance(false)}>No</button>
-            </li>
-          </ul>
+          <div>
+            <ul key={state.answers.join(``)}>
+              <li>
+                <button onClick={advance(true)}>Yes</button>
+              </li>
+              <li>
+                <button onClick={advance(false)}>No</button>
+              </li>
+            </ul>
+          </div>
         </article>
       );
       break;
