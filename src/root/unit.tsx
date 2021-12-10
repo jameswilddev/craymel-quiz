@@ -39,7 +39,7 @@ describe(`root`, () => {
   ];
 
   const gnomeOutro = [
-    `The Craymel that relies in your heart is the Earth Craymel, Gnome.`,
+    `The Craymel that resides in your heart is the Earth Craymel, Gnome.`,
     `You go from one thing to the next, leaving many things half-finished in pursuit of fun, do you not?`,
     `If you spoil yourself too much, your friends just may give up on you.`,
     `Maybe you should put forth more effort to make what's already in front of you more fun.`,
