@@ -210,14 +210,14 @@ export const Root = () => {
             className="message"
             onClick={() => {
               if (state.introLineIndex === introLines.length - 1) {
-                const left = [...primaryQuestions];
+                const left = primaryQuestions.map((_, index) => index);
 
                 const remainingPrimaryQuestionIndices: number[] = [];
 
                 while (left.length > 0) {
                   const index = Math.floor(Math.random() * left.length);
+                  remainingPrimaryQuestionIndices.push(left[index] as number);
                   left.splice(index, 1);
-                  remainingPrimaryQuestionIndices.push(index);
                 }
 
                 setState({
