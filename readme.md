@@ -64,7 +64,7 @@ You are now in the room with the Craymel Quiz.  It might be tricky to get back i
 
 ### Scoring
 
-The following six memory addresses each refer to an unsigned byte representing the quizmaster's affinity for each Craymel:
+The following six memory addresses each refer to an unsigned byte representing the player's affinity for each Craymel:
 
 | Memory Address | Craymel |
 | -------------- | ------- |
@@ -148,7 +148,7 @@ The primary questions are as follows, and are asked in a random order:
 
 (the question ID can be found at memory address 0x000fe5f0 while the game waits for the player to make a selection).
 
-If after all 60 primary questions are answered and a single Craymel has a highest score, the quiz ends with that Craymel as the player's match.
+If, after all 60 primary questions are answered, a single Craymel has a highest score, the quiz ends with that Craymel as the player's match.
 
 ### Tiebreaker Questions
 
