@@ -55,7 +55,7 @@
     "buildClean": "del-cli \"**/*.js\" \"**/*.d.ts\" \"!**/node_modules/**/*\"",
     "buildTypeScript": "tsc",
     "buildJasmineUnit": "jasmine --config=unit.jasmine.json",
-    "buildNyc": "nyc --all --exclude \"**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/unit.*\" --exclude \"webpack.config.js\" --lines 100 --functions 100 --branches 100 --statements 100 npm run-script buildJasmineUnit",
+    "buildNyc": "nyc --all --exclude \"**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/unit.*\" --exclude \"webpack.config.js\" --exclude \"dist\" --lines 100 --functions 100 --branches 100 --statements 100 npm run-script buildJasmineUnit",
     "test": "npm-run-all buildClean buildTypeScript buildNyc",
     "lint": "eslint \"**/*.ts\"",
     "webpack": "webpack --mode=production --config ./webpack.config.js",
