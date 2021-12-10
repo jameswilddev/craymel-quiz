@@ -14,12 +14,13 @@ jobs:
       with:
         node-version: '14.x'
         registry-url: 'https://registry.npmjs.org'
-    - run: sed -i s/"999\.999\.999"/"${GITHUB_REF##*/}"/ package.json package-lock.json src/index.pug
-      if: github.event_name == 'release'
     - run: npm ci
     - run: npm run-script lint
     - run: npm run-script buildTypeScript
     - run: npm run-script buildNyc
+    - run: sed -i s/"999\.999\.999"/"${GITHUB_REF##*/}"/ package.json package-lock.json src/index.pug
+      if: github.event_name == 'release'
+    - run: npm run-script buildTypeScript
     - run: npm run-script webpack
     - uses: jakejarvis/s3-sync-action@master
       with:
