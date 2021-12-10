@@ -53,172 +53,253 @@ describe(`root`, () => {
 
   const scenario = (
     description: string,
-    answerYesTo: ReadonlyArray<string>,
-    answerNoTo: ReadonlyArray<string>,
-    resultingOutro: ReadonlyArray<string>
+    answerYesTo?: ReadonlyArray<string>,
+    answerNoTo?: ReadonlyArray<string>,
+    resultingOutro?: ReadonlyArray<string>
   ): void => {
     it(description, () => {
       const testRenderer = ReactTestRenderer.create(<Root />);
 
       try {
-        for (const line of introLines) {
-          expect(testRenderer.toTree()).toEqual(
-            jasmine.objectContaining({
-              rendered: [
-                jasmine.objectContaining({
-                  type: `header`,
-                  props: {
-                    children: [
-                      jasmine.objectContaining({
-                        type: `h1`,
+        if (answerYesTo && answerNoTo && resultingOutro) {
+          for (const line of introLines) {
+            expect(testRenderer.toTree()).toEqual(
+              jasmine.objectContaining({
+                rendered: [
+                  jasmine.objectContaining({
+                    type: `header`,
+                    props: {
+                      children: [
+                        jasmine.objectContaining({
+                          type: `h1`,
+                          props: {
+                            children: `Craymel Quiz`,
+                          },
+                        }),
+                        jasmine.objectContaining({
+                          type: `div`,
+                          props: {
+                            children: [`v`, `999.999.999`],
+                          },
+                        }),
+                      ],
+                    },
+                  }),
+                  jasmine.objectContaining({
+                    type: `article`,
+                    props: {
+                      children: jasmine.objectContaining({
+                        type: `button`,
                         props: {
-                          children: `Craymel Quiz`,
-                        },
-                      }),
-                      jasmine.objectContaining({
-                        type: `div`,
-                        props: {
-                          children: [`v`, `999.999.999`],
-                        },
-                      }),
-                    ],
-                  },
-                }),
-                jasmine.objectContaining({
-                  type: `article`,
-                  props: {
-                    children: jasmine.objectContaining({
-                      type: `button`,
-                      props: {
-                        onClick: jasmine.any(Function),
-                        className: `message`,
-                        children: line,
-                      },
-                    }),
-                  },
-                }),
-              ],
-            })
-          );
-
-          ReactTestRenderer.act(() => {
-            testRenderer.root.findByType(`button`).props[`onClick`]();
-          });
-        }
-
-        const previousQuestions: string[] = [];
-
-        let previousKey: null | React.Key = null;
-
-        while (
-          previousQuestions.length <
-          answerYesTo.length + answerNoTo.length
-        ) {
-          expect(testRenderer.toTree()).toEqual(
-            jasmine.objectContaining({
-              rendered: [
-                jasmine.objectContaining({
-                  type: `header`,
-                  props: {
-                    children: [
-                      jasmine.objectContaining({
-                        type: `h1`,
-                        props: {
-                          children: `Craymel Quiz`,
-                        },
-                      }),
-                      jasmine.objectContaining({
-                        type: `div`,
-                        props: {
-                          children: [`v`, `999.999.999`],
-                        },
-                      }),
-                    ],
-                  },
-                }),
-                jasmine.objectContaining({
-                  type: `article`,
-                  props: {
-                    children: [
-                      jasmine.objectContaining({
-                        type: `p`,
-                        props: {
+                          onClick: jasmine.any(Function),
                           className: `message`,
-                          children: jasmine.any(String),
+                          children: line,
                         },
                       }),
-                      jasmine.objectContaining({
-                        type: `div`,
+                    },
+                  }),
+                  jasmine.objectContaining({
+                    type: `footer`,
+                    props: {
+                      children: jasmine.objectContaining({
+                        type: `button`,
                         props: {
-                          children: jasmine.objectContaining({
-                            type: `ul`,
-                            key: jasmine.anything(),
-                            props: {
-                              children: [
-                                jasmine.objectContaining({
-                                  type: `li`,
-                                  props: {
-                                    children: jasmine.objectContaining({
-                                      type: `button`,
-                                      props: {
-                                        onClick: jasmine.any(Function),
-                                        children: `Yes`,
-                                      },
-                                    }),
-                                  },
-                                }),
-                                jasmine.objectContaining({
-                                  type: `li`,
-                                  props: {
-                                    children: jasmine.objectContaining({
-                                      type: `button`,
-                                      props: {
-                                        onClick: jasmine.any(Function),
-                                        children: `No`,
-                                      },
-                                    }),
-                                  },
-                                }),
-                              ],
-                            },
-                          }),
+                          onClick: jasmine.any(Function),
+                          children: `Skip to readings`,
                         },
                       }),
-                    ],
-                  },
-                }),
-              ],
-            })
-          );
+                    },
+                  }),
+                ],
+              })
+            );
 
-          const p = testRenderer.root.findByType(`p`);
-          const question = p.props[`children`];
+            ReactTestRenderer.act(() => {
+              testRenderer.root.findAllByType(`button`)[0].props[`onClick`]();
+            });
+          }
 
-          expect(previousQuestions).not.toContain(
-            question,
-            `Repeated question`
-          );
+          const previousQuestions: string[] = [];
 
-          previousQuestions.push(question);
+          let previousKey: null | React.Key = null;
 
-          expect([...answerNoTo, ...answerYesTo]).toContain(
-            question,
-            `Unexpected question`
-          );
+          while (
+            previousQuestions.length <
+            answerYesTo.length + answerNoTo.length
+          ) {
+            expect(testRenderer.toTree()).toEqual(
+              jasmine.objectContaining({
+                rendered: [
+                  jasmine.objectContaining({
+                    type: `header`,
+                    props: {
+                      children: [
+                        jasmine.objectContaining({
+                          type: `h1`,
+                          props: {
+                            children: `Craymel Quiz`,
+                          },
+                        }),
+                        jasmine.objectContaining({
+                          type: `div`,
+                          props: {
+                            children: [`v`, `999.999.999`],
+                          },
+                        }),
+                      ],
+                    },
+                  }),
+                  jasmine.objectContaining({
+                    type: `article`,
+                    props: {
+                      children: [
+                        jasmine.objectContaining({
+                          type: `p`,
+                          props: {
+                            className: `message`,
+                            children: jasmine.any(String),
+                          },
+                        }),
+                        jasmine.objectContaining({
+                          type: `div`,
+                          props: {
+                            children: jasmine.objectContaining({
+                              type: `ul`,
+                              key: jasmine.anything(),
+                              props: {
+                                children: [
+                                  jasmine.objectContaining({
+                                    type: `li`,
+                                    props: {
+                                      children: jasmine.objectContaining({
+                                        type: `button`,
+                                        props: {
+                                          onClick: jasmine.any(Function),
+                                          children: `Yes`,
+                                        },
+                                      }),
+                                    },
+                                  }),
+                                  jasmine.objectContaining({
+                                    type: `li`,
+                                    props: {
+                                      children: jasmine.objectContaining({
+                                        type: `button`,
+                                        props: {
+                                          onClick: jasmine.any(Function),
+                                          children: `No`,
+                                        },
+                                      }),
+                                    },
+                                  }),
+                                ],
+                              },
+                            }),
+                          },
+                        }),
+                      ],
+                    },
+                  }),
+                  jasmine.objectContaining({
+                    type: `footer`,
+                    props: {
+                      children: jasmine.objectContaining({
+                        type: `button`,
+                        props: {
+                          onClick: jasmine.any(Function),
+                          children: `Skip to readings`,
+                        },
+                      }),
+                    },
+                  }),
+                ],
+              })
+            );
 
-          const ul = testRenderer.root.findByType(`ul`);
-          const key = (ul as any)._fiber.key;
-          expect(key).not.toEqual(previousKey);
-          previousKey = key;
+            const p = testRenderer.root.findByType(`p`);
+            const question = p.props[`children`];
 
-          ReactTestRenderer.act(() => {
-            testRenderer.root
-              .findAllByType(`button`)
-            [answerYesTo.includes(question) ? 0 : 1].props[`onClick`]();
-          });
-        }
+            expect(previousQuestions).not.toContain(
+              question,
+              `Repeated question`
+            );
 
-        for (const line of resultingOutro) {
+            previousQuestions.push(question);
+
+            expect([...answerNoTo, ...answerYesTo]).toContain(
+              question,
+              `Unexpected question`
+            );
+
+            const ul = testRenderer.root.findByType(`ul`);
+            const key = (ul as any)._fiber.key;
+            expect(key).not.toEqual(previousKey);
+            previousKey = key;
+
+            ReactTestRenderer.act(() => {
+              testRenderer.root
+                .findAllByType(`button`)
+              [answerYesTo.includes(question) ? 0 : 1].props[`onClick`]();
+            });
+          }
+
+          for (const line of resultingOutro) {
+            expect(testRenderer.toTree()).toEqual(
+              jasmine.objectContaining({
+                rendered: [
+                  jasmine.objectContaining({
+                    type: `header`,
+                    props: {
+                      children: [
+                        jasmine.objectContaining({
+                          type: `h1`,
+                          props: {
+                            children: `Craymel Quiz`,
+                          },
+                        }),
+                        jasmine.objectContaining({
+                          type: `div`,
+                          props: {
+                            children: [`v`, `999.999.999`],
+                          },
+                        }),
+                      ],
+                    },
+                  }),
+                  jasmine.objectContaining({
+                    type: `article`,
+                    props: {
+                      children: jasmine.objectContaining({
+                        type: `button`,
+                        props: {
+                          onClick: jasmine.any(Function),
+                          className: `message`,
+                          children: line,
+                        },
+                      }),
+                    },
+                  }),
+                  jasmine.objectContaining({
+                    type: `footer`,
+                    props: {
+                      children: jasmine.objectContaining({
+                        type: `button`,
+                        props: {
+                          onClick: jasmine.any(Function),
+                          children: `Skip to readings`,
+                        },
+                      }),
+                    },
+                  }),
+                ],
+              })
+            );
+
+            ReactTestRenderer.act(() => {
+              testRenderer.root.findAllByType(`button`)[0].props[`onClick`]();
+            });
+          }
+        } else {
           expect(testRenderer.toTree()).toEqual(
             jasmine.objectContaining({
               rendered: [
@@ -249,7 +330,19 @@ describe(`root`, () => {
                       props: {
                         onClick: jasmine.any(Function),
                         className: `message`,
-                        children: line,
+                        children: introLines[0],
+                      },
+                    }),
+                  },
+                }),
+                jasmine.objectContaining({
+                  type: `footer`,
+                  props: {
+                    children: jasmine.objectContaining({
+                      type: `button`,
+                      props: {
+                        onClick: jasmine.any(Function),
+                        children: `Skip to readings`,
                       },
                     }),
                   },
@@ -259,7 +352,7 @@ describe(`root`, () => {
           );
 
           ReactTestRenderer.act(() => {
-            testRenderer.root.findByType(`button`).props[`onClick`]();
+            testRenderer.root.findAllByType(`button`)[1].props[`onClick`]();
           });
         }
 
@@ -437,6 +530,18 @@ describe(`root`, () => {
                     ],
                   },
                 }),
+                jasmine.objectContaining({
+                  type: `footer`,
+                  props: {
+                    children: jasmine.objectContaining({
+                      type: `button`,
+                      props: {
+                        onClick: jasmine.any(Function),
+                        children: `Skip to readings`,
+                      },
+                    }),
+                  },
+                }),
               ],
             })
           );
@@ -483,12 +588,24 @@ describe(`root`, () => {
                       }),
                     },
                   }),
+                  jasmine.objectContaining({
+                    type: `footer`,
+                    props: {
+                      children: jasmine.objectContaining({
+                        type: `button`,
+                        props: {
+                          onClick: jasmine.any(Function),
+                          children: `Skip to readings`,
+                        },
+                      }),
+                    },
+                  }),
                 ],
               })
             );
 
             ReactTestRenderer.act(() => {
-              testRenderer.root.findByType(`button`).props[`onClick`]();
+              testRenderer.root.findAllByType(`button`)[0].props[`onClick`]();
             });
           }
         }
@@ -530,6 +647,18 @@ describe(`root`, () => {
                       onClick: jasmine.any(Function),
                       className: `message`,
                       children: `Shall I tell you which Craymel resides in you?`,
+                    },
+                  }),
+                },
+              }),
+              jasmine.objectContaining({
+                type: `footer`,
+                props: {
+                  children: jasmine.objectContaining({
+                    type: `button`,
+                    props: {
+                      onClick: jasmine.any(Function),
+                      children: `Skip to readings`,
                     },
                   }),
                 },
@@ -1088,4 +1217,6 @@ describe(`root`, () => {
     [...tiebreakerNo],
     sylphOutro
   );
+
+  scenario(`skip to end`);
 });

@@ -438,6 +438,15 @@ export const Root = () => {
         <div>v{version}</div>
       </header>
       {article}
+      <footer>
+        <button
+          onClick={() => {
+            setState({ type: `endMenu` });
+          }}
+        >
+          Skip to readings
+        </button>
+      </footer>
     </React.Fragment>
   );
 };
