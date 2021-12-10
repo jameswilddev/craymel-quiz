@@ -8,7 +8,14 @@ const introLines: ReadonlyArray<string> = [
   `We will begin.`,
 ];
 
-const finalOutroLine = `We are finished.  Live in harmony with your Craymel.`;
+const craymelNames: ReadonlyArray<string> = [
+  `Undine`,
+  `Sylph`,
+  `Efreet`,
+  `Gnome`,
+  `Celsius`,
+  `Volt`,
+];
 
 const craymelOutroLines: ReadonlyArray<ReadonlyArray<string>> = [
   [
@@ -16,42 +23,36 @@ const craymelOutroLines: ReadonlyArray<ReadonlyArray<string>> = [
     `You are fairly easily satisfied, and don't feel the need to take things too far.`,
     `You hate conflict and pressure, and you seldom express your opinions straight out.`,
     `...But the one who loses out in the end by putting things off or not speaking up is you.`,
-    finalOutroLine,
   ],
   [
     `The Craymel that resides in your heart is the Wind Craymel, Sylph.`,
     `You are a rather emotional, moody person.`,
     `If you fail to follow through on your responsibilities because of your whims, you'll lose your friends' trust.`,
     `Rather than being disappointed when others don't understand you, work hard so that others will recognize your worth.`,
-    finalOutroLine,
   ],
   [
     `The Craymel that resides in your heart is the Fire Craymel, Efreet.`,
     `Not wanting to show any weakness, do you often find yourself forcing others to do what you want?`,
     `If you are too overbearing, you can become somewhat of a dictator and risk losing your friends.`,
     `Leaders have to learn to listen to what others have to say, too.`,
-    finalOutroLine,
   ],
   [
     `The Craymel that resides in your heart is the Earth Craymel, Gnome.`,
     `You go from one thing to the next, leaving many things half-finished in pursuit of fun, do you not?`,
     `If you spoil yourself too much, your friends just may give up on you.`,
     `Maybe you should put forth more effort to make what's already in front of you more fun.`,
-    finalOutroLine,
   ],
   [
     `The Craymel that resides in your heart is the Ice Craymel, Celsius.`,
     `You have a wealth of knowledge, but aren't you rather unwilling to share it?`,
     `If you constantly judge others, people will never see past your faults and see the good person that you truly are.`,
     `Rather than keeping thoughts to yourself, why not try learning how to enjoy sharing time and knowledge with your friends?`,
-    finalOutroLine,
   ],
   [
     `The Craymel that resides in your heart is the Lightning Craymel, Volt.`,
     `If you insist on the same level of perfection from others as from yourself, your friends will avoid you.`,
     `Understand that each person has his or her own way of doing things.`,
     `Things you are sure to be correct may sometimes be wrong, too.  Don't be too insistent on your ideals.`,
-    finalOutroLine,
   ],
 ];
 
@@ -198,6 +199,9 @@ export const Root = () => {
       readonly type: `outro`;
       readonly craymelIndex: number;
       readonly lineIndex: number;
+    }
+    | {
+      readonly type: `endMenu`;
     }
   >({ type: `intro`, introLineIndex: 0 });
 
@@ -368,8 +372,7 @@ export const Root = () => {
             onClick={() => {
               if (state.lineIndex === outroLines.length - 1) {
                 setState({
-                  type: `intro`,
-                  introLineIndex: 0,
+                  type: `endMenu`,
                 });
               } else {
                 setState({
@@ -385,6 +388,47 @@ export const Root = () => {
       );
       break;
     }
+
+    case `endMenu`:
+      article = (
+        <article>
+          <p className="message">
+            We are finished. Live in harmony with your Craymel.
+          </p>
+          <div>
+            <ul>
+              {craymelNames.map((craymelName, craymelIndex) => (
+                <li key={craymelName}>
+                  <button
+                    onClick={() => {
+                      setState({
+                        type: `outro`,
+                        craymelIndex,
+                        lineIndex: 0,
+                      });
+                    }}
+                  >
+                    See {craymelName}'s reading
+                  </button>
+                </li>
+              ))}
+              <li>
+                <button
+                  onClick={() => {
+                    setState({
+                      type: `intro`,
+                      introLineIndex: 0,
+                    });
+                  }}
+                >
+                  Start Over
+                </button>
+              </li>
+            </ul>
+          </div>
+        </article>
+      );
+      break;
   }
 
   return (

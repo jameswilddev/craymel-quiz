@@ -9,17 +9,11 @@ describe(`root`, () => {
     `We will begin.`,
   ];
 
-  const outroLines = [
-    `We are finished.  Live in harmony with your Craymel.`,
-    `Shall I tell you which Craymel resides in you?`,
-  ];
-
   const undineOutro = [
     `The Craymel that resides in your heart is the Water Craymel, Undine.`,
     `You are fairly easily satisfied, and don't feel the need to take things too far.`,
     `You hate conflict and pressure, and you seldom express your opinions straight out.`,
     `...But the one who loses out in the end by putting things off or not speaking up is you.`,
-    ...outroLines,
   ];
 
   const sylphOutro = [
@@ -27,7 +21,6 @@ describe(`root`, () => {
     `You are a rather emotional, moody person.`,
     `If you fail to follow through on your responsibilities because of your whims, you'll lose your friends' trust.`,
     `Rather than being disappointed when others don't understand you, work hard so that others will recognize your worth.`,
-    ...outroLines,
   ];
 
   const efreetOutro = [
@@ -35,7 +28,6 @@ describe(`root`, () => {
     `Not wanting to show any weakness, do you often find yourself forcing others to do what you want?`,
     `If you are too overbearing, you can become somewhat of a dictator and risk losing your friends.`,
     `Leaders have to learn to listen to what others have to say, too.`,
-    ...outroLines,
   ];
 
   const gnomeOutro = [
@@ -43,7 +35,6 @@ describe(`root`, () => {
     `You go from one thing to the next, leaving many things half-finished in pursuit of fun, do you not?`,
     `If you spoil yourself too much, your friends just may give up on you.`,
     `Maybe you should put forth more effort to make what's already in front of you more fun.`,
-    ...outroLines,
   ];
 
   const celsiusOutro = [
@@ -51,7 +42,6 @@ describe(`root`, () => {
     `You have a wealth of knowledge, but aren't you rather unwilling to share it?`,
     `If you constantly judge others, people will never see past your faults and see the good person that you truly are.`,
     `Rather than keeping thoughts to yourself, why not try learning how to enjoy sharing time and knowledge with your friends?`,
-    ...outroLines,
   ];
 
   const voltOutro = [
@@ -59,7 +49,6 @@ describe(`root`, () => {
     `If you insist on the same level of perfection from others as from yourself, your friends will avoid you.`,
     `Understand that each person has his or her own way of doing things.`,
     `Things you are sure to be correct may sometimes be wrong, too.  Don't be too insistent on your ideals.`,
-    ...outroLines,
   ];
 
   const scenario = (
@@ -273,6 +262,281 @@ describe(`root`, () => {
             testRenderer.root.findByType(`button`).props[`onClick`]();
           });
         }
+
+        const outroLinesByCraymelIndex = [
+          undineOutro,
+          sylphOutro,
+          efreetOutro,
+          gnomeOutro,
+          celsiusOutro,
+          voltOutro,
+        ];
+
+        for (
+          let craymelIndex = 0;
+          craymelIndex < outroLinesByCraymelIndex.length;
+          craymelIndex++
+        ) {
+          const craymelOutroLines = outroLinesByCraymelIndex[craymelIndex];
+
+          expect(testRenderer.toTree()).toEqual(
+            jasmine.objectContaining({
+              rendered: [
+                jasmine.objectContaining({
+                  type: `header`,
+                  props: {
+                    children: [
+                      jasmine.objectContaining({
+                        type: `h1`,
+                        props: {
+                          children: `Craymel Quiz`,
+                        },
+                      }),
+                      jasmine.objectContaining({
+                        type: `div`,
+                        props: {
+                          children: [`v`, `999.999.999`],
+                        },
+                      }),
+                    ],
+                  },
+                }),
+                jasmine.objectContaining({
+                  type: `article`,
+                  props: {
+                    children: [
+                      jasmine.objectContaining({
+                        type: `p`,
+                        props: {
+                          className: `message`,
+                          children: `We are finished. Live in harmony with your Craymel.`,
+                        },
+                      }),
+                      jasmine.objectContaining({
+                        type: `div`,
+                        props: {
+                          children: jasmine.objectContaining({
+                            type: `ul`,
+                            props: {
+                              children: [
+                                [
+                                  jasmine.objectContaining({
+                                    type: `li`,
+                                    props: {
+                                      children: jasmine.objectContaining({
+                                        type: `button`,
+                                        props: {
+                                          onClick: jasmine.any(Function),
+                                          children: [
+                                            `See `,
+                                            `Undine`,
+                                            `'s reading`,
+                                          ],
+                                        },
+                                      }),
+                                    },
+                                  }),
+                                  jasmine.objectContaining({
+                                    type: `li`,
+                                    props: {
+                                      children: jasmine.objectContaining({
+                                        type: `button`,
+                                        props: {
+                                          onClick: jasmine.any(Function),
+                                          children: [
+                                            `See `,
+                                            `Sylph`,
+                                            `'s reading`,
+                                          ],
+                                        },
+                                      }),
+                                    },
+                                  }),
+                                  jasmine.objectContaining({
+                                    type: `li`,
+                                    props: {
+                                      children: jasmine.objectContaining({
+                                        type: `button`,
+                                        props: {
+                                          onClick: jasmine.any(Function),
+                                          children: [
+                                            `See `,
+                                            `Efreet`,
+                                            `'s reading`,
+                                          ],
+                                        },
+                                      }),
+                                    },
+                                  }),
+                                  jasmine.objectContaining({
+                                    type: `li`,
+                                    props: {
+                                      children: jasmine.objectContaining({
+                                        type: `button`,
+                                        props: {
+                                          onClick: jasmine.any(Function),
+                                          children: [
+                                            `See `,
+                                            `Gnome`,
+                                            `'s reading`,
+                                          ],
+                                        },
+                                      }),
+                                    },
+                                  }),
+                                  jasmine.objectContaining({
+                                    type: `li`,
+                                    props: {
+                                      children: jasmine.objectContaining({
+                                        type: `button`,
+                                        props: {
+                                          onClick: jasmine.any(Function),
+                                          children: [
+                                            `See `,
+                                            `Celsius`,
+                                            `'s reading`,
+                                          ],
+                                        },
+                                      }),
+                                    },
+                                  }),
+                                  jasmine.objectContaining({
+                                    type: `li`,
+                                    props: {
+                                      children: jasmine.objectContaining({
+                                        type: `button`,
+                                        props: {
+                                          onClick: jasmine.any(Function),
+                                          children: [
+                                            `See `,
+                                            `Volt`,
+                                            `'s reading`,
+                                          ],
+                                        },
+                                      }),
+                                    },
+                                  }),
+                                ],
+                                jasmine.objectContaining({
+                                  type: `li`,
+                                  props: {
+                                    children: jasmine.objectContaining({
+                                      type: `button`,
+                                      props: {
+                                        onClick: jasmine.any(Function),
+                                        children: `Start Over`,
+                                      },
+                                    }),
+                                  },
+                                }),
+                              ],
+                            },
+                          }),
+                        },
+                      }),
+                    ],
+                  },
+                }),
+              ],
+            })
+          );
+
+          ReactTestRenderer.act(() => {
+            testRenderer.root
+              .findAllByType(`button`)
+            [craymelIndex].props[`onClick`]();
+          });
+
+          for (const line of craymelOutroLines) {
+            expect(testRenderer.toTree()).toEqual(
+              jasmine.objectContaining({
+                rendered: [
+                  jasmine.objectContaining({
+                    type: `header`,
+                    props: {
+                      children: [
+                        jasmine.objectContaining({
+                          type: `h1`,
+                          props: {
+                            children: `Craymel Quiz`,
+                          },
+                        }),
+                        jasmine.objectContaining({
+                          type: `div`,
+                          props: {
+                            children: [`v`, `999.999.999`],
+                          },
+                        }),
+                      ],
+                    },
+                  }),
+                  jasmine.objectContaining({
+                    type: `article`,
+                    props: {
+                      children: jasmine.objectContaining({
+                        type: `button`,
+                        props: {
+                          onClick: jasmine.any(Function),
+                          className: `message`,
+                          children: line,
+                        },
+                      }),
+                    },
+                  }),
+                ],
+              })
+            );
+
+            ReactTestRenderer.act(() => {
+              testRenderer.root.findByType(`button`).props[`onClick`]();
+            });
+          }
+        }
+
+        ReactTestRenderer.act(() => {
+          testRenderer.root
+            .findAllByType(`button`)
+          [outroLinesByCraymelIndex.length].props[`onClick`]();
+        });
+
+        expect(testRenderer.toTree()).toEqual(
+          jasmine.objectContaining({
+            rendered: [
+              jasmine.objectContaining({
+                type: `header`,
+                props: {
+                  children: [
+                    jasmine.objectContaining({
+                      type: `h1`,
+                      props: {
+                        children: `Craymel Quiz`,
+                      },
+                    }),
+                    jasmine.objectContaining({
+                      type: `div`,
+                      props: {
+                        children: [`v`, `999.999.999`],
+                      },
+                    }),
+                  ],
+                },
+              }),
+              jasmine.objectContaining({
+                type: `article`,
+                props: {
+                  children: jasmine.objectContaining({
+                    type: `button`,
+                    props: {
+                      onClick: jasmine.any(Function),
+                      className: `message`,
+                      children: `Shall I tell you which Craymel resides in you?`,
+                    },
+                  }),
+                },
+              }),
+            ],
+          })
+        );
       } finally {
         testRenderer.unmount();
       }
