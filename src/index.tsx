@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import "./index.sass";
 
 import * as reactDom from "react-dom";

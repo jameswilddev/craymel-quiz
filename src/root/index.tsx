@@ -1,4 +1,5 @@
 import * as React from "react";
+// TODO: whole JSON packaged
 import { version } from "../../package.json";
 
 const introLines: ReadonlyArray<string> = [
